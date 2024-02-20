@@ -69,6 +69,10 @@ class UserController extends Controller
      */
     public function edit()
     {
+        //Bloqueia o adm de acessar essa tela
+        if(Auth::user()->email =='adm@adm')
+            return redirect('/');
+
         $endereco = Endereco::where('user_id', Auth::user()->id)->first();
         return view('auth.register', [
             'user' => Auth::user(), 
@@ -85,11 +89,17 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
+        //Bloqueia o adm de acessar essa tela
+        if(Auth::user()->email =='adm@adm')
+            return redirect('/');
+        
         $user = User::find(Auth::user()->id);
         $endereco = Endereco::find($request['endereco_id']);
 
         if($user->email == $request['email']){
             $request['email'] = 'nao@avaliar.com';
+        }else{
+            $user['email'] = $request['email'];
         }
 
         $validator = Validator::make($request->all(), [
@@ -107,7 +117,6 @@ class UserController extends Controller
         ]);
 
         $user['name'] = $request['name'];
-        $user['email'] = $request['email'];
         $user['cpf'] = $request['cpf'];
 
         $endereco['estado'] = $request['estado'];
@@ -128,7 +137,6 @@ class UserController extends Controller
         }
 
         $request['email'] = $user['email'];
-
         $user->save();
         $endereco->save();
 

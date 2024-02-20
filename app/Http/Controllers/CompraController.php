@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Compra;
 use App\Models\CompraProduto;
 use App\Models\Produto;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -38,8 +39,14 @@ class CompraController extends Controller
         $promocoes = $produto->promocoes()->get();
         $preco_com_desconto = $produto->preco * $quantidade;
 
-        foreach($promocoes as $promocao)
-            $preco_com_desconto *= ((100 - $promocao->percentagem)/100);
+        foreach($promocoes as $promocao) {
+            $data_inicio = Carbon::create($promocao->data_inicio);
+            $data_fim = Carbon::create($promocao->data_fim);
+            $data_hoje = Carbon::today();
+            if($data_hoje->gte($data_inicio) && $data_hoje->lte($data_fim)){
+                $preco_com_desconto *= ((100 - $promocao->percentagem)/100);
+            }
+        }
 
         return $preco_com_desconto;
     }
@@ -52,6 +59,10 @@ class CompraController extends Controller
      */
     public function adicionarAoCarrinho (Request $request)
     {
+        //Bloqueia o adm de acessar essa tela
+        if(Auth::user()->email =='adm@adm')
+            return redirect('/');
+        
         $produto = Produto::find($request['produto_id']);
         $estoque_ok = true;
         
@@ -109,6 +120,7 @@ class CompraController extends Controller
         foreach($itens_carrinho as $item){
             $produto = Produto::find($item->produto_id);
             $item->preco_com_desconto = $this->getDescontoProdutoNoCarrinho($produto, $item->quantidade);
+            $item->preco_com_desconto = round((float) $item->preco_com_desconto, 2);
             $item->save();
         }
 
@@ -159,6 +171,10 @@ class CompraController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function irParaCarrinho() {
+        //Bloqueia o adm de acessar essa tela
+        if(Auth::user()->email =='adm@adm')
+            return redirect('/');
+
         return view('compra.carrinho', $this->getDadosCarrinho());
     }
 

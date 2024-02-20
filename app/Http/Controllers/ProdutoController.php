@@ -7,6 +7,7 @@ use App\Models\Produto;
 use App\Models\Promocao;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -58,7 +59,7 @@ class ProdutoController extends Controller
         }
 
         if ($nome)
-            $busca = $busca->where('nome', 'like', '%'.$nome.'%');
+            $busca = $busca->where('nom', 'like', '%'.$nome.'%');
         
         if ($categoria)
             $busca = $busca->where('categoria_id', $categoria);
@@ -109,6 +110,10 @@ class ProdutoController extends Controller
      */
     public function create()
     {
+        //Bloqueia o acesso à usuários sem privilégio
+        if(Auth::user()->email !='adm@adm')
+            return redirect('/');
+        
         return view('produto.cadastro', ['categorias' => Categoria::all()]);
     }
 
@@ -120,6 +125,10 @@ class ProdutoController extends Controller
      */
     public function store(Request $request)
     {
+        //Bloqueia o acesso à usuários sem privilégio
+        if(Auth::user()->email !='adm@adm')
+            return redirect('/');
+
         $data = $request->all();
         $validator =  Validator::make($data, [
             'nome' => ['required', 'string', 'max:255', 'unique:produtos'],
@@ -170,7 +179,14 @@ class ProdutoController extends Controller
      */
     public function edit(Produto $produto)
     {
-        //
+        //Bloqueia o acesso à usuários sem privilégio
+        if(Auth::user()->email !='adm@adm')
+            return redirect('/');
+        
+        return view('produto.cadastro', [
+            'produto' => $produto, 
+            'categorias' => Categoria::all()
+        ]);
     }
 
     /**
@@ -180,19 +196,47 @@ class ProdutoController extends Controller
      * @param  \App\Models\Produto  $produto
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Produto $produto)
+    public function update(Request $request)
     {
-        //
-    }
+        //Bloqueia o acesso à usuários sem privilégio
+        if(Auth::user()->email !='adm@adm')
+            return redirect('/');
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Produto  $produto
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Produto $produto)
-    {
-        //
+        $produto = Produto::find($request['produto_id']);
+        if($produto->nome == $request['nome']) {
+            $request['nome'] = 'nao avaliar';
+        }else {
+            $produto['nome'] = $request['nome'];
+        }
+
+        $data = $request->all();
+        $validator =  Validator::make($data, [
+            'nome' => ['required', 'string', 'max:255', 'unique:produtos'],
+            'descricao' => ['required', 'string', 'max:255'],
+            'marca' => ['required', 'string'],
+            'cor' => ['required', 'string'],
+            'preco' => ['required', 'numeric', 'min:0', 'regex:/^\d+(\.\d{1,2})?$/'],
+            'peso' => ['required', 'numeric', 'min:1', 'regex:/^\d+(\.\d{1,2})?$/'],
+            'estoque' => ['required', 'numeric', 'integer', 'min:0'],
+            'categoria' => ['required', 'exists:categorias,id'],
+        ]);
+
+        $produto['descricao'] = $request['descricao'];
+        $produto['marca'] = $request['marca'];
+        $produto['cor'] = $request['cor'];
+        $produto['preco'] = $request['preco'];
+        $produto['peso'] = $request['peso'];
+        $produto['estoque'] = $request['estoque'];
+        $produto['categoria_id'] = $request['categoria'];
+
+        if($validator->fails()) {
+            $request['nome'] = $produto['nome'];    
+            return redirect('/atualizaProduto/' . $produto->id)->withErrors($validator)->withInput();
+        }
+
+        $request['nome'] = $produto['nome'];
+        $produto->save();
+
+        return redirect()->back()->with('mensagem_status', 'Dados atualizados');
     }
 }

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Compra;
+use App\Models\CompraProduto;
 use App\Models\Endereco;
 use App\Models\Pagamento;
+use App\Models\Produto;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -40,6 +42,10 @@ class PagamentoController extends Controller
      */
     public function create(Request $request)
     {
+        //Bloqueia o adm de acessar essa tela
+        if(Auth::user()->email =='adm@adm')
+            return redirect('/');
+        
         $compra = Compra::find($request['compra_id']);
         $pagamento = $compra->pagamento()->first();
 
@@ -64,8 +70,13 @@ class PagamentoController extends Controller
      */
     public function store(Request $request)
     {
+        //Bloqueia o adm de acessar essa tela
+        if(Auth::user()->email =='adm@adm')
+            return redirect('/');
+
         $compra = Compra::find($request['compra_id']);
         $pagamento = $compra->pagamento()->first();
+        $itens_carrinho = [];
 
         $validator = Validator::make($request->all(), [
             'nome_titular' => ['required', 'string', 'max:256'],
@@ -79,63 +90,27 @@ class PagamentoController extends Controller
             return redirect()->back()->withErrors($validator)->with(['pagamento' => $pagamento, 'compra_id' => $compra->compra_id]);
         }
 
+        // Reduz os itens comprados do estoque
+        $itens_carrinho = CompraProduto::where('compra_id', $compra->id)->get();
+        foreach($itens_carrinho as $item) {
+            $produto = Produto::find($item->produto_id);
+            $produto->estoque -= $item->quantidade;
+            $produto->save();
+        }
+
+        // Marca compra como concluída e cria um novo objeto compra para futuras operações
         $compra->concluida = true;
         $compra->data_compra = Carbon::now();
         $compra->save();
-
         Auth::user()->compras()->create([
             'concluida' => false,
         ]);
 
+        // Salva as informações de pagamento
         $pagamento->nome_titular = $request['nome_titular'];
         $pagamento->data_vencimento_cartao = $request['data_vencimento_cartao'];
         $pagamento->numero_cartao = $request['numero_cartao'];
 
         return redirect('produtos')->with(['mensagem_status' => 'Pagamento efetuado!']);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Pagamento  $pagamento
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Pagamento $pagamento)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Pagamento  $pagamento
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Pagamento $pagamento)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Pagamento  $pagamento
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Pagamento $pagamento)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Pagamento  $pagamento
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Pagamento $pagamento)
-    {
-        //
     }
 }
