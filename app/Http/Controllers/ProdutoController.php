@@ -59,13 +59,13 @@ class ProdutoController extends Controller
         }
 
         if ($nome)
-            $busca = $busca->where('nom', 'like', '%'.$nome.'%');
+            $busca = $busca->where('nome', 'like', '%'.$nome.'%');
         
         if ($categoria)
             $busca = $busca->where('categoria_id', $categoria);
         
         if ($marca)
-            $busca = $busca->where('nome', 'like', '%'.$marca.'%');
+            $busca = $busca->where('marca', 'like', '%'.$marca.'%');
 
         if (!is_null($preco_minimo) && !is_null($preco_maximo)) {
             $busca = $busca->whereBetween('preco', [$preco_minimo, $preco_maximo]);
@@ -136,7 +136,7 @@ class ProdutoController extends Controller
             'marca' => ['required', 'string'],
             'cor' => ['required', 'string'],
             'preco' => ['required', 'numeric', 'min:0', 'regex:/^\d+(\.\d{1,2})?$/'],
-            'peso' => ['required', 'numeric', 'min:1', 'regex:/^\d+(\.\d{1,2})?$/'],
+            'peso' => ['required', 'numeric', 'min:0.01', 'regex:/^\d+(\.\d{1,2})?$/'],
             'estoque' => ['required', 'numeric', 'integer', 'min:0'],
             'categoria' => ['required', 'exists:categorias,id'],
         ]);
@@ -216,7 +216,7 @@ class ProdutoController extends Controller
             'marca' => ['required', 'string'],
             'cor' => ['required', 'string'],
             'preco' => ['required', 'numeric', 'min:0', 'regex:/^\d+(\.\d{1,2})?$/'],
-            'peso' => ['required', 'numeric', 'min:1', 'regex:/^\d+(\.\d{1,2})?$/'],
+            'peso' => ['required', 'numeric', 'min:0.01', 'regex:/^\d+(\.\d{1,2})?$/'],
             'estoque' => ['required', 'numeric', 'integer', 'min:0'],
             'categoria' => ['required', 'exists:categorias,id'],
         ]);

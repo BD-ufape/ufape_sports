@@ -110,6 +110,7 @@ class PagamentoController extends Controller
         $pagamento->nome_titular = $request['nome_titular'];
         $pagamento->data_vencimento_cartao = $request['data_vencimento_cartao'];
         $pagamento->numero_cartao = $request['numero_cartao'];
+        $pagamento->save();
 
         return redirect('produtos')->with(['mensagem_status' => 'Pagamento efetuado!']);
     }
