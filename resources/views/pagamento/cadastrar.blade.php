@@ -56,7 +56,7 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="endereco_entrega" class="col-md-4 col-form-label text-md-end">{{ __('Data de vencimento do cartão') }}</label>
+                            <label for="endereco_entrega" class="col-md-4 col-form-label text-md-end">{{ __('Endereço de entrega') }}</label>
 
                             <div class="col-md-6">
                                 <input id="endereco_entrega" type="text" class="form-control @error('endereco_entrega') is-invalid @enderror" name="endereco_entrega" value="{{ $pagamento->endereco_entrega ?? old('endereco_entrega') }}" required autocomplete="endereco_entrega" disabled>
