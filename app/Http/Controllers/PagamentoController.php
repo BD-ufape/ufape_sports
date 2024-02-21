@@ -50,10 +50,10 @@ class PagamentoController extends Controller
         $pagamento = $compra->pagamento()->first();
 
         if(!$pagamento) {
-            $pagamento = $compra->pagamento()->create([
+            $pagamento = $compra->pagamento()->make([
                 'nome_titular' => "XXXXX",
                 'data_vencimento_cartao' => "XX/XX",
-                'numero_cartao' => 1,
+                'numero_cartao' => "00000000",
                 'endereco_entrega' => $this->getEnderecoUser(),
                 'total' => $request['total']
             ]);
@@ -75,19 +75,25 @@ class PagamentoController extends Controller
             return redirect('/');
 
         $compra = Compra::find($request['compra_id']);
-        $pagamento = $compra->pagamento()->first();
+        $pagamento = $compra->pagamento()->make([
+            'nome_titular' => "XXXXX",
+            'data_vencimento_cartao' => "XX/XX",
+            'numero_cartao' => "00000000",
+            'endereco_entrega' => $request['endereco_entrega'],
+            'total' => $request['total']
+        ]);;
         $itens_carrinho = [];
 
         $validator = Validator::make($request->all(), [
             'nome_titular' => ['required', 'string', 'max:256'],
             'data_vencimento_cartao' => ['required', 'string', 'max:255'],
-            'numero_cartao' => ['required', 'integer', 'min:0'],
+            'numero_cartao' => ['required', 'string', 'regex:/^[0-9]+$/'],
             // 'endereco_entrega' => ['required', 'string', 'regex:/^[0-9]+$/'],
             // 'total' => ['required', 'numeric', 'min:0', 'regex:/^\d+(\.\d{1,2})?$/']
         ]);
 
         if($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->with(['pagamento' => $pagamento, 'compra_id' => $compra->compra_id]);
+            return redirect()->back()->withErrors($validator)->withInput()->with(['pagamento' => $pagamento, 'compra_id' => $compra->compra_id]);
         }
 
         // Reduz os itens comprados do estoque
