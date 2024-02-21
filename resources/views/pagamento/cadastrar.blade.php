@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Pagamento') }}</div>
+                <div class="card-header"><h5 class="card-tile">{{ __('Pagamento') }}</h5></div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('finalizarPagamento') }}">
@@ -74,8 +74,8 @@
                             <label for="total" class="col-md-4 col-form-label text-md-end">{{ __('Total') }}</label>
 
                             <div class="col-md-6">
-                            <input id="total" type="number" step="0.01" class="form-control @error('total') is-invalid @enderror" name="total" value="{{ old('total') ?? $pagamento->total ?? ''}}" required autocomplete="total" hidden>
-                                <input id="total" type="number" step="0.01" class="form-control @error('total') is-invalid @enderror" name="total" value="{{ old('total') ?? $pagamento->total ?? ''}}" required autocomplete="total" disabled>
+                                <input id="total" type="number" step="0.01" class="form-control @error('total') is-invalid @enderror" name="total" value="{{ $total }}" hidden>
+                                <input id="total" type="number" step="0.01" class="form-control @error('total') is-invalid @enderror" name="total" value="{{ $total }}" disabled>
 
                                 @error('total')
                                     <span class="invalid-feedback" role="alert">

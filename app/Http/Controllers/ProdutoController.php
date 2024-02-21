@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Categoria;
 use App\Models\Produto;
 use App\Models\Promocao;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -55,7 +56,9 @@ class ProdutoController extends Controller
         if(is_null($promocao_id)) {
             $busca = DB::table('produtos');
         }else {
-            $busca = Produto::doesntHave('promocoes');
+            $busca = Produto::whereDoesntHave('promocoes', function (Builder $query) use ($promocao_id) {
+                $query->where('promocao_id', $promocao_id);
+            });
         }
 
         if ($nome)
@@ -157,7 +160,7 @@ class ProdutoController extends Controller
             'categoria_id' => $data['categoria'],
         ]);
 
-        return redirect('/cadastroProduto');
+        return redirect('/cadastroProduto')->with('mensagem_status', 'Produto cadastrado');
     }
 
     /**
@@ -168,7 +171,28 @@ class ProdutoController extends Controller
      */
     public function show(Produto $produto)
     {
-        return $produto;
+        $promocoes = $produto->promocoes()->get();
+        $promocoes_valendo = collect();
+        $produtos_mesma_categoria = Produto::where('categoria_id', $produto->categoria()->first()->id)->get();
+        $preco_com_desconto = $produto->preco;
+
+        foreach($promocoes as $promocao) {
+            $data_inicio = Carbon::create($promocao->data_inicio);
+            $data_fim = Carbon::create($promocao->data_fim);
+            $data_hoje = Carbon::today();
+            if($data_hoje->gte($data_inicio) && $data_hoje->lte($data_fim)) {
+                $promocoes_valendo->push($promocao);
+                $preco_com_desconto *= ((100 - $promocao->percentagem)/100);
+            }
+        }
+
+        $produto['preco_com_desconto'] = $preco_com_desconto;
+
+        return view('produto.visualizar', [
+            'produto_atual' => $produto,
+            'produtos_mesma_categoria' => $produtos_mesma_categoria,
+            'promocoes_valendo' => $promocoes_valendo,
+        ]);
     }
 
     /**

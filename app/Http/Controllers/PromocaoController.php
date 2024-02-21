@@ -70,7 +70,7 @@ class PromocaoController extends Controller
             'percentagem' => $data['percentagem'],
         ]);
 
-        return view('promocao.cadastro', ['promocoes' => Promocao::all()]);
+        return redirect('/cadastroPromocao')->with('mensagem_status', 'Categoria cadastrada');
     }
 
     /**
@@ -127,7 +127,7 @@ class PromocaoController extends Controller
             $promocao->produtos()->attach($request['produto_id']);
         }
 
-        return view('produto.consultar', $this->getDadosParaTelaDeConsulta($promocao));
+        return redirect()->back()->withInput()->with($this->getDadosParaTelaDeConsulta($promocao));
     }
 
     /**

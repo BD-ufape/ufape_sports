@@ -55,6 +55,20 @@
                             @if(Auth::user()->email == 'adm@adm')
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        CONSULTAS
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                        <a class="dropdown-item" href="{{ route('telaHistoricoCompras') }}">
+                                            {{ __('Histórico') }}
+                                        </a>
+                                        <a class="dropdown-item" href="">
+                                            {{ __('Relatório') }}
+                                        </a>
+                                    </div>
+                                </li>
+
+                                <li class="nav-item dropdown">
+                                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         PROMOÇÕES
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
@@ -63,9 +77,7 @@
                                         </a>
                                     </div>
                                 </li>
-                            @endif
 
-                            @if(Auth::user()->email == 'adm@adm')
                                 <li class="nav-item dropdown">
                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         CATEGORIAS
@@ -110,6 +122,10 @@
                                     @if(Auth::user()->email != 'adm@adm')
                                         <a class="dropdown-item" href="{{ route('edit') }}" >
                                             {{ __('Editar') }}
+                                        </a>
+
+                                        <a class="dropdown-item" href="{{ route('telaHistoricoCompras') }}" >
+                                            {{ __('Compras') }}
                                         </a>
                                     @endif
 

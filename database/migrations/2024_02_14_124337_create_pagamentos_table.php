@@ -21,7 +21,6 @@ class CreatePagamentosTable extends Migration
             $table->string('data_vencimento_cartao');
             $table->string('numero_cartao');
             $table->string('endereco_entrega');
-            $table->double('total');
         });
     }
 

@@ -15,7 +15,6 @@ class Pagamento extends Model
         'data_vencimento_cartao',
         'numero_cartao',
         'endereco_entrega',
-        'total',
     ];
 
     public function compra(): BelongsTo

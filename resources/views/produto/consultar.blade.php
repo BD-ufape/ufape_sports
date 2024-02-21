@@ -21,7 +21,7 @@
 
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">{{ __('Buscar Produtos') }}</div>
+                <div class="card-header"><h5 class="card-title">{{ __('Buscar Produtos') }}</h5></div>
 
                 <div class="card-body">
                     <form method="GET" action="{{ route('consultaProdutos') }}">
@@ -48,6 +48,7 @@
 
                                     <div class="col-md-8">
                                         <select id="categoria" class="form-select" aria-label="Default select example" name="categoria">
+                                            <option value="0" selected>Todos</option>
                                             @foreach($categorias as $categoria)
                                                 <option value="{{ $categoria->id }}">{{ $categoria->nome }}</option>
                                             @endforeach
@@ -106,11 +107,9 @@
                         </div>
 
                         <div class="row mb-0">
-                            <div class="col-md-6">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Buscar') }}
-                                </button>
-                            </div>
+                            <button type="submit" class="btn btn-primary col-md-12">
+                                {{ __('Buscar') }}
+                            </button>
                         </div>
                     </form>
                 </div>
@@ -125,7 +124,7 @@
 
                 <div class="row">
                     @forelse($produtos_promocao as $produto_promocao)
-                        <div class="col-md-3">
+                        <div class="col-md-3 mb-3">
                             <div class="card">
                                 <div class="card-body">
                                     <input type="text" class="form-control mb-2" value="Nome: {{ $produto_promocao->nome }}" disabled>
@@ -161,7 +160,7 @@
 
             <div class="row">
                 @forelse($produtos as $produto)
-                    <div class="col-md-3">
+                    <div class="col-md-3 mb-3">
                         <div class="card">
                             <div class="card-body">
                                 <input type="text" class="form-control mb-2" value="Nome: {{ $produto->nome }}" disabled>
@@ -201,6 +200,7 @@
                                         </form>
                                     @endempty
                                 @endif
+                                <a class="btn btn-info col-12 my-2" href="{{ route('visualizarProduto', ['produto' => $produto->id]) }}" role="button">{{ __('Visualizar') }}</a>
                             </div>
                         </div>
                     </div>

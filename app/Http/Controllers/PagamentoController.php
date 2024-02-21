@@ -55,11 +55,14 @@ class PagamentoController extends Controller
                 'data_vencimento_cartao' => "XX/XX",
                 'numero_cartao' => "00000000",
                 'endereco_entrega' => $this->getEnderecoUser(),
-                'total' => $request['total']
             ]);
         }
 
-        return view('pagamento.cadastrar', ['pagamento' => $pagamento, 'compra_id' => $compra->id]);
+        return view('pagamento.cadastrar', [
+            'pagamento' => $pagamento, 
+            'compra_id' => $compra->id,
+            'total' => $request['total'],
+        ]);
     }
 
     /**
@@ -80,7 +83,6 @@ class PagamentoController extends Controller
             'data_vencimento_cartao' => "XX/XX",
             'numero_cartao' => "00000000",
             'endereco_entrega' => $request['endereco_entrega'],
-            'total' => $request['total']
         ]);;
         $itens_carrinho = [];
 
@@ -89,11 +91,14 @@ class PagamentoController extends Controller
             'data_vencimento_cartao' => ['required', 'string', 'max:255'],
             'numero_cartao' => ['required', 'string', 'regex:/^[0-9]+$/'],
             // 'endereco_entrega' => ['required', 'string', 'regex:/^[0-9]+$/'],
-            // 'total' => ['required', 'numeric', 'min:0', 'regex:/^\d+(\.\d{1,2})?$/']
         ]);
 
         if($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput()->with(['pagamento' => $pagamento, 'compra_id' => $compra->compra_id]);
+            return redirect()->back()->withErrors($validator)->withInput()->with([
+                'pagamento' => $pagamento, 
+                'compra_id' => $compra->compra_id,
+                'total' => $request['total'],
+            ]);
         }
 
         // Reduz os itens comprados do estoque
@@ -107,6 +112,7 @@ class PagamentoController extends Controller
         // Marca compra como concluída e cria um novo objeto compra para futuras operações
         $compra->concluida = true;
         $compra->data_compra = Carbon::now();
+        $compra->total = $request['total'];
         $compra->save();
         Auth::user()->compras()->create([
             'concluida' => false,
