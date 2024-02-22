@@ -16,67 +16,66 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-            [
-                'name' => 'Admin',
-                'email' => 'adm@adm',
-                'password' => Hash::make('1'),
-                'telefone' => '1',
-                'cpf' => '01',
-            ],
-            [
-                'name' => 'Cliente A',
-                'email' => 'a@a',
-                'password' => Hash::make('1'),
-                'telefone' => '2',
-                'cpf' => '02',
-            ],
-            [
-                'name' => 'Cliente B',
-                'email' => 'b@b',
-                'password' => Hash::make('1'),
-                'telefone' => '3',
-                'cpf' => '03',
-            ],
+            ['name' => 'Admin', 'email' => 'adm@adm', 'password' => Hash::make('1'), 'telefone' => '10001', 'cpf' => '01', ],
+            ['name' => 'Bilbo', 'email' => '1@1', 'password' => Hash::make('1'), 'telefone' => '00012301', 'cpf' => '12312301', ],
+            ['name' => 'Thorin', 'email' => '2@2', 'password' => Hash::make('1'), 'telefone' => '00048901', 'cpf' => '45645602', ],
+            ['name' => 'Gandalf', 'email' => '3@3', 'password' => Hash::make('1'), 'telefone' => '98765209', 'cpf' => '78978903', ],
+            ['name' => 'Kili', 'email' => '4@4', 'password' => Hash::make('1'), 'telefone' => '01964289', 'cpf' => '7897890304', ],
+            ['name' => 'Bombur', 'email' => '5@5', 'password' => Hash::make('1'), 'telefone' => '76501856', 'cpf' => '76187305', ],
         ]);
 
         DB::table('enderecos')->insert([
-            [
-                'user_id' => '1',
-                'estado' => 'Ooo',
-                'cidade' => 'Cidadela',
-                'bairro' => 'Sei lá man',
-                'logradouro' => 'Rua 1 Número 1',
-                'cep' => '01',
-            ],
-            [
-                'user_id' => '2',
-                'estado' => 'Arkham',
-                'cidade' => 'Sem nome',
-                'bairro' => 'Sei lá man',
-                'logradouro' => 'Rua 42 Número 0',
-                'cep' => '69',
-            ],
-            [
-                'user_id' => '3',
-                'estado' => 'PE',
-                'cidade' => 'Garanhuns',
-                'bairro' => 'Sei lá man',
-                'logradouro' => '???',
-                'cep' => '5529????',
-            ],
+            ['user_id' => '1', 'estado' => 'Ooo', 'cidade' => 'Cidadela', 'bairro' => 'Sei lá man', 'logradouro' => 'Rua 1 Número 1', 'cep' => '2020202', ],
+            ['user_id' => '2', 'estado' => 'Terra Média', 'cidade' => 'O Condado', 'bairro' => 'Hobbiton', 'logradouro' => 'Uma toca no chão', 'cep' => '1010101', ],
+            ['user_id' => '3', 'estado' => 'Arkham', 'cidade' => 'Sem nome', 'bairro' => 'Sei lá man', 'logradouro' => 'Rua 42 Número 0', 'cep' => '1234567', ],
+            ['user_id' => '4', 'estado' => 'PE', 'cidade' => 'Garanhuns', 'bairro' => 'Sei lá man', 'logradouro' => '???', 'cep' => '5529????', ],
+            ['user_id' => '5', 'estado' => 'Terra Média', 'cidade' => 'Num sei', 'bairro' => 'Montanha da Perdição', 'logradouro' => 'Tbm num sei', 'cep' => '1', ],
         ]);
 
         DB::table('compras')->insert([
-            [
-                'user_id' => 2,
-                'concluida' => false,
-                'data_compra' => null,
-            ],
-            [
-                'user_id' => 3,
-                'concluida' => false,
-                'data_compra' => null,
-            ],
+            ['user_id' => 2, 'concluida' => true, 'data_compra' => '01/01/2024', 'total' => 530.5],
+            ['user_id' => 2, 'concluida' => true, 'data_compra' => '10/01/2024', 'total' => 350],
+            ['user_id' => 2, 'concluida' => true, 'data_compra' => '05/02/2024', 'total' => 125],
+            ['user_id' => 2, 'concluida' => true, 'data_compra' => '22/01/2024', 'total' => 250],
+            
+            ['user_id' => 3, 'concluida' => true, 'data_compra' => '01/01/2024', 'total' => 230],
+            ['user_id' => 3, 'concluida' => true, 'data_compra' => '15/01/2024', 'total' => 300],
+            ['user_id' => 3, 'concluida' => true, 'data_compra' => '21/01/2024', 'total' => 30],
+            ['user_id' => 3, 'concluida' => true, 'data_compra' => '22/01/2024', 'total' => 150],
+            
+            ['user_id' => 4, 'concluida' => true, 'data_compra' => '15/01/2024', 'total' => 1100],
+            ['user_id' => 4, 'concluida' => true, 'data_compra' => '13/02/2024', 'total' => 290],
+            ['user_id' => 4, 'concluida' => true, 'data_compra' => '20/02/2024', 'total' => 1500],
+            
+            ['user_id' => 5, 'concluida' => true, 'data_compra' => '01/01/2024', 'total' => 3500],
+            ['user_id' => 5, 'concluida' => true, 'data_compra' => '30/01/2024', 'total' => 3230],
+            
+            ['user_id' => 2, 'concluida' => false, 'data_compra' => null, 'total' => null],
+            ['user_id' => 3, 'concluida' => false, 'data_compra' => null, 'total' => null],
+            ['user_id' => 4, 'concluida' => false, 'data_compra' => null, 'total' => null],
+            ['user_id' => 5, 'concluida' => false, 'data_compra' => null, 'total' => null],
+            ['user_id' => 6, 'concluida' => false, 'data_compra' => null, 'total' => null],
+            
+        ]);
+
+        DB::table('pagamentos')->insert([
+            ['compra_id' => 1, 'nome_titular' => 'Bilbo', 'data_vencimento_cartao' => '01/12/2032', 'numero_cartao' => '0101010', 'cod_seguranca' => '001', 'endereco_entrega' => 'Terra Média | O Condado | Hobbiton | | Uma toca no chão | 1010101'],
+            ['compra_id' => 2, 'nome_titular' => 'Bilbo', 'data_vencimento_cartao' => '01/12/2032', 'numero_cartao' => '0101010', 'cod_seguranca' => '001', 'endereco_entrega' => 'Terra Média | O Condado | Hobbiton | | Uma toca no chão | 1010101'],
+            ['compra_id' => 3, 'nome_titular' => 'Frodo', 'data_vencimento_cartao' => '01/10/2025', 'numero_cartao' => '0811243', 'cod_seguranca' => '130', 'endereco_entrega' => 'Terra Média | O Condado | Hobbiton | | Uma toca no chão | 1010101'],
+            ['compra_id' => 4, 'nome_titular' => 'Frodo', 'data_vencimento_cartao' => '01/10/2025', 'numero_cartao' => '0811243', 'cod_seguranca' => '130', 'endereco_entrega' => 'Terra Média | O Condado | Hobbiton | | Uma toca no chão | 1010101'],
+            
+            ['compra_id' => 5, 'nome_titular' => 'Thorin', 'data_vencimento_cartao' => '10/11/2030', 'numero_cartao' => '0197124', 'cod_seguranca' => '042', 'endereco_entrega' => 'Arkham | Sem nome | Sei lá man | Rua 42 Número 0 | 1234567'],
+            ['compra_id' => 6, 'nome_titular' => 'Thorin', 'data_vencimento_cartao' => '10/11/2030', 'numero_cartao' => '0197124', 'cod_seguranca' => '042', 'endereco_entrega' => 'Arkham | Sem nome | Sei lá man | Rua 42 Número 0 | 1234567'],
+            ['compra_id' => 7, 'nome_titular' => 'Thorin', 'data_vencimento_cartao' => '10/11/2030', 'numero_cartao' => '0197124', 'cod_seguranca' => '042', 'endereco_entrega' => 'Arkham | Sem nome | Sei lá man | Rua 42 Número 0 | 1234567'],
+            ['compra_id' => 8, 'nome_titular' => 'Thorin', 'data_vencimento_cartao' => '10/11/2030', 'numero_cartao' => '0197124', 'cod_seguranca' => '042', 'endereco_entrega' => 'Arkham | Sem nome | Sei lá man | Rua 42 Número 0 | 1234567'],
+            
+            ['compra_id' => 9, 'nome_titular' => 'Gandalf', 'data_vencimento_cartao' => '01/12/2032', 'numero_cartao' => '0305171', 'cod_seguranca' => '100', 'endereco_entrega' => 'PE | Garanhuns | Sei lá man | ??? | 55292210'],
+            ['compra_id' => 10, 'nome_titular' => 'Gandalf', 'data_vencimento_cartao' => '01/12/2032', 'numero_cartao' => '0305171', 'cod_seguranca' => '100', 'endereco_entrega' => 'PE | Garanhuns | Sei lá man | ??? | 55292210'],
+            ['compra_id' => 11, 'nome_titular' => 'Gandalf', 'data_vencimento_cartao' => '01/12/2032', 'numero_cartao' => '0305171', 'cod_seguranca' => '100', 'endereco_entrega' => 'PE | Garanhuns | Sei lá man | ??? | 55292210'],
+            
+            ['compra_id' => 12, 'nome_titular' => 'Kili', 'data_vencimento_cartao' => '01/01/2028', 'numero_cartao' => '1234567', 'cod_seguranca' => '121', 'endereco_entrega' => 'Terra Média | Num sei | bairro | Montanha da Perdição | Tbm num sei | 1'],
+            ['compra_id' => 13, 'nome_titular' => 'Fili', 'data_vencimento_cartao' => '06/09/2030', 'numero_cartao' => '7654321', 'cod_seguranca' => '211', 'endereco_entrega' => 'Terra Média | Num sei | bairro | Montanha da Perdição | Tbm num sei | 1'],
+            
         ]);
 
         DB::table('categorias')->insert([
@@ -128,7 +127,7 @@ class DatabaseSeeder extends Seeder
                 'nome' => 'Surf e Esportes Aquáticos',
                 'descricao' => 'Produtos para surf e outros esportes aquáticos, incluindo pranchas, wetsuits e acessórios.',
             ]
-    ]);
+        ]);
 
         DB::table('produtos')->insert([
             ['categoria_id' => '1', 'nome' => 'Camisa de time', 'descricao' => 'Camisa de time aleatório', 'marca' => 'Adidas', 'cor' => '#000000', 'preco' => 110.50, 'peso' => 1, 'estoque' => 10,],
@@ -184,12 +183,57 @@ class DatabaseSeeder extends Seeder
             
         ]);
 
+        DB::table(('item_compra'))->insert([
+            // User_id 2
+            ['compra_id' => 1, 'produto_id' => 1, 'quantidade' => 1, 'preco_total' => 110.5, 'preco_com_desconto' => 110.5],
+            ['compra_id' => 1, 'produto_id' => 8, 'quantidade' => 1, 'preco_total' => 60, 'preco_com_desconto' => 60],
+            ['compra_id' => 1, 'produto_id' => 5, 'quantidade' => 2, 'preco_total' => 500, 'preco_com_desconto' => 360],
+
+            ['compra_id' => 2, 'produto_id' => 26, 'quantidade' => 5, 'preco_total' => 350, 'preco_com_desconto' => 350],
+
+            ['compra_id' => 3, 'produto_id' => 2, 'quantidade' => 1, 'preco_total' => 50, 'preco_com_desconto' => 50],
+            ['compra_id' => 3, 'produto_id' => 12, 'quantidade' => 10, 'preco_total' => 100, 'preco_com_desconto' => 75],
+
+            ['compra_id' => 4, 'produto_id' => 48, 'quantidade' => 1, 'preco_total' => 250, 'preco_com_desconto' => 250],
+
+            // User_id 3
+            ['compra_id' => 5, 'produto_id' => 9, 'quantidade' => 1, 'preco_total' => 170, 'preco_com_desconto' => 170],
+            ['compra_id' => 5, 'produto_id' => 10, 'quantidade' => 1, 'preco_total' => 60, 'preco_com_desconto' => 60],
+
+            ['compra_id' => 6, 'produto_id' => 3, 'quantidade' => 3, 'preco_total' => 360, 'preco_com_desconto' => 300],
+
+            ['compra_id' => 7, 'produto_id' => 33, 'quantidade' => 1, 'preco_total' => 40, 'preco_com_desconto' => 40],
+
+            ['compra_id' => 8, 'produto_id' => 34, 'quantidade' => 1, 'preco_total' => 150, 'preco_com_desconto' => 150],
+
+            // User_id 4
+            ['compra_id' => 9, 'produto_id' => 31, 'quantidade' => 1, 'preco_total' => 1300, 'preco_com_desconto' => 1100],
+
+            ['compra_id' => 10, 'produto_id' => 47, 'quantidade' => 1, 'preco_total' => 300, 'preco_com_desconto' => 290],
+
+            ['compra_id' => 11, 'produto_id' => 29, 'quantidade' => 1, 'preco_total' => 1500, 'preco_com_desconto' => 1500],
+
+            // User_id 5
+            ['compra_id' => 12, 'produto_id' => 15, 'quantidade' => 1, 'preco_total' => 300, 'preco_com_desconto' => 300],
+            ['compra_id' => 12, 'produto_id' => 16, 'quantidade' => 1, 'preco_total' => 1200, 'preco_com_desconto' => 1200],
+            ['compra_id' => 12, 'produto_id' => 23, 'quantidade' => 1, 'preco_total' => 1200, 'preco_com_desconto' => 1200],
+            ['compra_id' => 12, 'produto_id' => 39, 'quantidade' => 1, 'preco_total' => 390, 'preco_com_desconto' => 350],
+
+            ['compra_id' => 13, 'produto_id' => 50, 'quantidade' => 5, 'preco_total' => 100, 'preco_com_desconto' => 75],
+            ['compra_id' => 13, 'produto_id' => 49, 'quantidade' => 1, 'preco_total' => 80, 'preco_com_desconto' => 80],
+            ['compra_id' => 13, 'produto_id' => 26, 'quantidade' => 1, 'preco_total' => 800, 'preco_com_desconto' => 600],
+            ['compra_id' => 13, 'produto_id' => 24, 'quantidade' => 1, 'preco_total' => 900, 'preco_com_desconto' => 900],
+            ['compra_id' => 13, 'produto_id' => 25, 'quantidade' => 1, 'preco_total' => 1500, 'preco_com_desconto' => 1500],
+            ['compra_id' => 13, 'produto_id' => 12, 'quantidade' => 10, 'preco_total' => 100, 'preco_com_desconto' => 75],
+
+        ]);
+
         DB::table('promocoes')->insert([
             [
                 'nome' => 'Sexta Caotica',
                 'descricao' => 'Chaos',
                 'data_inicio' => '16/02/24',
-                'data_fim' => '17/02/24',
+                'data_fim' => '01/03/24',
                 'percentagem' => 75,
             ],
 
@@ -197,7 +241,7 @@ class DatabaseSeeder extends Seeder
                 'nome' => 'Corrida Contra o Tempo',
                 'descricao' => 'Descontos acelerados em todos os produtos de corrida e fitness. Aproveite antes que o tempo acabe!',
                 'data_inicio' => '22/02/2024',
-                'data_fim' => '24/02/2024',
+                'data_fim' => '28/02/2024',
                 'percentagem' => 50,
             ],
             [
@@ -209,6 +253,25 @@ class DatabaseSeeder extends Seeder
             ],
             
         ]);
+
+        DB::table('produto_promocao')->insert([
+            ['produto_id' => 5, 'promocao_id' => 1],
+            ['produto_id' => 20, 'promocao_id' => 1],
+            ['produto_id' => 40, 'promocao_id' => 1],
+            ['produto_id' => 11, 'promocao_id' => 1],
+            ['produto_id' => 31, 'promocao_id' => 1],
+            ['produto_id' => 1, 'promocao_id' => 1],
+
+            // ['produto_id' => , 'promocao_id' => 2],
+            // ['produto_id' => , 'promocao_id' => 2],
+            // ['produto_id' => , 'promocao_id' => 2],
+
+            ['produto_id' => 15, 'promocao_id' => 3],
+            ['produto_id' => 16, 'promocao_id' => 3],
+            ['produto_id' => 23, 'promocao_id' => 3],
+            ['produto_id' => 39, 'promocao_id' => 3],
+        ]);
+
         // \App\Models\User::factory(10)->create();
     }
 }

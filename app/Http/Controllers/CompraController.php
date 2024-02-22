@@ -284,7 +284,6 @@ class CompraController extends Controller
         if(Auth::user()->email =='adm@adm') 
             $compra['cpf_cliente'] = $this->maskCpf($compra->user()->first()->cpf);
             
-
         return view('compra.visualizar', [
             'compra' => $compra,
             'pagamento' => $compra->pagamento()->first(),
