@@ -79,6 +79,17 @@
                             </div>
                         </div>
 
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <label for="cpf" class="col-md-4 form-label">{{ __('CPF') }}</label>
+                                    <div class="col-md-8">
+                                        <input id="cpf" type="text" class="form-control" name="cpf" value="{{ old('cpf') ?? '' }}" autocomplete="cpf">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="row mb-0">
                             <button type="submit" class="btn btn-primary col-md-12">
                                 {{ __('Buscar') }}

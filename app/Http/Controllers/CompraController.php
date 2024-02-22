@@ -6,6 +6,7 @@ use App\Models\Compra;
 use App\Models\CompraProduto;
 use App\Models\Produto;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -49,6 +50,14 @@ class CompraController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function historico(Request $request) {
+        // Filtra por cpf
+        $cpf = $request['cpf'];
+        if(!is_null($cpf)) {
+            $compra = Compra::whereHas('user', function (Builder $query) use ($cpf) {
+                $query->where('cpf', $cpf);
+            })->where('concluida', true);
+        }
+
         if(Auth::user()->email =='adm@adm')
             $compras = Compra::where('concluida', true);
         else

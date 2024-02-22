@@ -74,6 +74,31 @@ class PromocaoController extends Controller
     }
 
     /**
+     * Retorna um objeto produto com dados adicionais referentes as suas promoções
+     * 
+     * @param Produto $produto
+     * @return Produto
+     */
+    private function getDadosPromocionaisProduto(Produto $produto) {
+        $promocoes = $produto->promocoes()->get();
+        $preco_com_desconto = $produto->preco;
+
+        foreach($promocoes as $promocao) {
+            $data_inicio = Carbon::create($promocao->data_inicio);
+            $data_fim = Carbon::create($promocao->data_fim);
+            $data_hoje = Carbon::today();
+            if($data_hoje->gte($data_inicio) && $data_hoje->lte($data_fim)) {
+                $preco_com_desconto *= ((100 - $promocao->percentagem)/100);
+                $produto['promocao_ativa'] = true;
+            }
+        }
+
+        $produto['preco_com_desconto'] = $preco_com_desconto;
+
+        return $produto;
+    }
+
+    /**
      * Prepara o array de dados que será usado na view 'produto.consultar'
      *
      * @param  \App\Models\Promocao  $promocao
@@ -84,6 +109,16 @@ class PromocaoController extends Controller
     {
         $produtos_promocao = $promocao->produtos()->get();
         $produtos = Produto::all()->diff($produtos_promocao);
+
+        $tmp = collect();
+        foreach($produtos_promocao as $produto)
+            $tmp->push($this->getDadosPromocionaisProduto($produto));
+        $produtos_promocao = $tmp;
+
+        $tmp = collect();
+        foreach($produtos as $produto)
+            $tmp->push($this->getDadosPromocionaisProduto($produto));
+        $produtos = $tmp;
 
         $dados = [
             'promocao' => $promocao,

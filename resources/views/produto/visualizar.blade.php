@@ -125,11 +125,12 @@
             <div class="row">
                 @forelse($produtos_mesma_categoria as $produto)
                     <div class="col-md-3 mb-3">
-                        <div class="card">
+                        <div class="card" style="@if($produto['promocao_ativa']) background-color:yellow; @endif">
                             <div class="card-body">
                                 <input type="text" class="form-control mb-2" value="Nome: {{ $produto->nome }}" disabled>
                                 <input type="text" class="form-control mb-2" value="Marca: {{ $produto->marca }}" disabled>
                                 <input type="text" class="form-control mb-2" value="Preco: R${{ $produto->preco }}" disabled>
+                                <input type="text" class="form-control mb-2" value="Promoção: R${{ $produto->preco_com_desconto }}" disabled>
                                 <input type="text" class="form-control mb-2" value="Peso: {{ $produto->peso }}kg" disabled>
                                 <input type="color" class="form-control form-control-color mb-2" value="{{ $produto->cor }}" disabled>
 

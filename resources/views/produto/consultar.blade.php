@@ -125,11 +125,12 @@
                 <div class="row">
                     @forelse($produtos_promocao as $produto_promocao)
                         <div class="col-md-3 mb-3">
-                            <div class="card">
+                            <div class="card" style="@if($produto_promocao['promocao_ativa']) background-color:yellow; @endif">
                                 <div class="card-body">
                                     <input type="text" class="form-control mb-2" value="Nome: {{ $produto_promocao->nome }}" disabled>
                                     <input type="text" class="form-control mb-2" value="Marca: {{ $produto_promocao->marca }}" disabled>
                                     <input type="text" class="form-control mb-2" value="Preco: R${{ $produto_promocao->preco }}" disabled>
+                                    <input type="text" class="form-control mb-2" value="Promoção: R${{ $produto_promocao->preco_com_desconto }}" disabled>
                                     <input type="text" class="form-control mb-2" value="Peso: {{ $produto_promocao->peso }}kg" disabled>
                                     <input type="color" class="form-control form-control-color mb-2" value="{{ $produto_promocao->cor }}" disabled>
                                     
@@ -151,7 +152,7 @@
                     @endforelse
                 </div>
             </div>
-        @endempty
+        @endisset
 
         <!-- LISTAGEM DE PRODUTOS SEM PROMOÇÃO -->
         <div class="col-md-12 mt-3">
@@ -162,10 +163,11 @@
                 @forelse($produtos as $produto)
                     <div class="col-md-3 mb-3">
                         <div class="card">
-                            <div class="card-body">
+                            <div class="card-body" style="@if($produto['promocao_ativa']) background-color:yellow; @endif">
                                 <input type="text" class="form-control mb-2" value="Nome: {{ $produto->nome }}" disabled>
                                 <input type="text" class="form-control mb-2" value="Marca: {{ $produto->marca }}" disabled>
                                 <input type="text" class="form-control mb-2" value="Preco: R${{ $produto->preco }}" disabled>
+                                <input type="text" class="form-control mb-2" value="Promoção: R${{ $produto->preco_com_desconto }}" disabled>
                                 <input type="text" class="form-control mb-2" value="Peso: {{ $produto->peso }}kg" disabled>
                                 <input type="color" class="form-control form-control-color mb-2" value="{{ $produto->cor }}" disabled>
 

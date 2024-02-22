@@ -25,14 +25,43 @@ class ProdutoController extends Controller
     }
 
     /**
+     * Retorna um objeto produto com dados adicionais referentes as suas promoções
+     * 
+     * @param Produto $produto
+     * @return Produto
+     */
+    private function getDadosPromocionaisProduto(Produto $produto) {
+        $promocoes = $produto->promocoes()->get();
+        $preco_com_desconto = $produto->preco;
+
+        foreach($promocoes as $promocao) {
+            $data_inicio = Carbon::create($promocao->data_inicio);
+            $data_fim = Carbon::create($promocao->data_fim);
+            $data_hoje = Carbon::today();
+            if($data_hoje->gte($data_inicio) && $data_hoje->lte($data_fim)) {
+                $preco_com_desconto *= ((100 - $promocao->percentagem)/100);
+                $produto['promocao_ativa'] = true;
+            }
+        }
+
+        $produto['preco_com_desconto'] = $preco_com_desconto;
+
+        return $produto;
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
+        $produtos = collect();
+        foreach(Produto::all() as $produto)
+            $produtos->push($this->getDadosPromocionaisProduto($produto));
+
         return view('produto.consultar', [
-            'produtos' => Produto::all(),
+            'produtos' => $produtos,
             'categorias' => Categoria::all(),
         ]);
     }
@@ -54,7 +83,7 @@ class ProdutoController extends Controller
         $promocao_id = $request['promocao_id'];
 
         if(is_null($promocao_id)) {
-            $busca = DB::table('produtos');
+            $busca = Produto::where('id', '>', 0);
         }else {
             $busca = Produto::whereDoesntHave('promocoes', function (Builder $query) use ($promocao_id) {
                 $query->where('promocao_id', $promocao_id);
@@ -86,15 +115,20 @@ class ProdutoController extends Controller
             $busca = $busca->where('peso', '<=', $peso_maximo);
         }
 
+        $produtos = collect();
+        foreach($busca->get() as $produto)
+            $produtos->push($this->getDadosPromocionaisProduto($produto));
+
         if(is_null($promocao_id)) {
             return view('produto.consultar', [
-                'produtos' => $busca->get(),
+                'produtos' => $produtos,
                 'categorias' => Categoria::all(),
             ]);
         } else {
             $promocao = Promocao::find($promocao_id);
-            $produtos_promocao = $promocao->produtos()->get();
-            $produtos = $busca->get();
+            $produtos_promocao = collect();
+            foreach($promocao->produtos()->get() as $produto)
+                $produtos_promocao->push($this->getDadosPromocionaisProduto($produto));
 
             return view('produto.consultar', [
                 'promocao' => $promocao,
@@ -187,6 +221,11 @@ class ProdutoController extends Controller
         }
 
         $produto['preco_com_desconto'] = $preco_com_desconto;
+
+        $tmp = collect();
+        foreach($produtos_mesma_categoria as $produto_m_c)
+            $tmp->push($this->getDadosPromocionaisProduto($produto_m_c));
+        $produtos_mesma_categoria = $tmp;
 
         return view('produto.visualizar', [
             'produto_atual' => $produto,
