@@ -61,9 +61,6 @@
                                         <a class="dropdown-item" href="{{ route('telaHistoricoCompras') }}">
                                             {{ __('Histórico') }}
                                         </a>
-                                        <a class="dropdown-item" href="">
-                                            {{ __('Relatório') }}
-                                        </a>
                                     </div>
                                 </li>
 

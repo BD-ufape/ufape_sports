@@ -14,6 +14,7 @@ class Pagamento extends Model
         'nome_titular',
         'data_vencimento_cartao',
         'numero_cartao',
+        'cod_seguranca',
         'endereco_entrega',
     ];
 

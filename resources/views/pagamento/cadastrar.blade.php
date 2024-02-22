@@ -56,6 +56,20 @@
                         </div>
 
                         <div class="row mb-3">
+                            <label for="cod_seguranca" class="col-md-4 col-form-label text-md-end">{{ __('Código de segurança') }}</label>
+
+                            <div class="col-md-4">
+                                <input id="cod_seguranca" type="text" class="form-control @error('cod_seguranca') is-invalid @enderror" name="cod_seguranca" value="{{ old('cod_seguranca') ?? $pagamento->cod_seguranca ?? '' }}" required autocomplete="cod_seguranca" autofocus>
+
+                                @error('cod_seguranca')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
                             <label for="endereco_entrega" class="col-md-4 col-form-label text-md-end">{{ __('Endereço de entrega') }}</label>
 
                             <div class="col-md-6">

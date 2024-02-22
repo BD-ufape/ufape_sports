@@ -62,6 +62,7 @@ class ProdutoController extends Controller
 
         return view('produto.consultar', [
             'produtos' => $produtos,
+            'promocoes' => Promocao::all(),
             'categorias' => Categoria::all(),
         ]);
     }
@@ -75,6 +76,7 @@ class ProdutoController extends Controller
     {
         $nome = $request['nome'];
         $categoria = $request['categoria'];
+        $promocao = $request['promocao'];
         $marca = $request['marca'];
         $preco_minimo = $request['preco_minimo'];
         $preco_maximo = $request['preco_maximo'];
@@ -86,7 +88,7 @@ class ProdutoController extends Controller
             $busca = Produto::where('id', '>', 0);
         }else {
             $busca = Produto::whereDoesntHave('promocoes', function (Builder $query) use ($promocao_id) {
-                $query->where('promocao_id', $promocao_id);
+                $query->where('promocao_id', $promocao_id)->where('data_fim', '<=', Carbon::today());
             });
         }
 
@@ -95,6 +97,12 @@ class ProdutoController extends Controller
         
         if ($categoria)
             $busca = $busca->where('categoria_id', $categoria);
+
+        if ($promocao) {
+            $busca = $busca->whereHas('promocoes', function (Builder $query) use ($promocao) {
+                $query->where('promocao_id', $promocao);
+            });
+        }
         
         if ($marca)
             $busca = $busca->where('marca', 'like', '%'.$marca.'%');
@@ -122,6 +130,7 @@ class ProdutoController extends Controller
         if(is_null($promocao_id)) {
             return view('produto.consultar', [
                 'produtos' => $produtos,
+                'promocoes' => Promocao::all(),
                 'categorias' => Categoria::all(),
             ]);
         } else {
@@ -134,6 +143,7 @@ class ProdutoController extends Controller
                 'promocao' => $promocao,
                 'produtos_promocao' => $produtos_promocao,
                 'produtos' => $produtos,
+                'promocoes' => Promocao::all(),
                 'categorias' => Categoria::all(),
             ]);
         }
@@ -205,9 +215,10 @@ class ProdutoController extends Controller
      */
     public function show(Produto $produto)
     {
+        $categoria = $produto->categoria()->first();
         $promocoes = $produto->promocoes()->get();
         $promocoes_valendo = collect();
-        $produtos_mesma_categoria = Produto::where('categoria_id', $produto->categoria()->first()->id)->get();
+        $produtos_mesma_categoria = Produto::where('categoria_id', $categoria->id)->get();
         $preco_com_desconto = $produto->preco;
 
         foreach($promocoes as $promocao) {
@@ -229,6 +240,7 @@ class ProdutoController extends Controller
 
         return view('produto.visualizar', [
             'produto_atual' => $produto,
+            'nome_categoria' => $categoria->nome,
             'produtos_mesma_categoria' => $produtos_mesma_categoria,
             'promocoes_valendo' => $promocoes_valendo,
         ]);

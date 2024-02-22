@@ -54,6 +54,7 @@ class PagamentoController extends Controller
                 'nome_titular' => "XXXXX",
                 'data_vencimento_cartao' => "XX/XX",
                 'numero_cartao' => "00000000",
+                'cod_seguranca' => '000',
                 'endereco_entrega' => $this->getEnderecoUser(),
             ]);
         }
@@ -82,6 +83,7 @@ class PagamentoController extends Controller
             'nome_titular' => "XXXXX",
             'data_vencimento_cartao' => "XX/XX",
             'numero_cartao' => "00000000",
+            'cod_seguranca' => '000',
             'endereco_entrega' => $request['endereco_entrega'],
         ]);;
         $itens_carrinho = [];
@@ -90,6 +92,7 @@ class PagamentoController extends Controller
             'nome_titular' => ['required', 'string', 'max:256'],
             'data_vencimento_cartao' => ['required', 'string', 'max:255'],
             'numero_cartao' => ['required', 'string', 'regex:/^[0-9]+$/'],
+            'cod_seguranca' => ['required', 'string', 'regex:/^[0-9]+$/', 'max:3'],
             // 'endereco_entrega' => ['required', 'string', 'regex:/^[0-9]+$/'],
         ]);
 

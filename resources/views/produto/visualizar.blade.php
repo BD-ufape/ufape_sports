@@ -3,21 +3,21 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-    @if(session('mensagem_status_aviso'))
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            <strong>{{ session('mensagem_status_aviso') }}</strong> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-    @if(session('mensagem_status'))
-        <div class="alert alert-primary alert-dismissible fade show" role="alert">
-            <strong>{{ session('mensagem_status') }}</strong> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-    @if(session('mensagem_status_erro'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>{{ session('mensagem_status_erro') }}</strong> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
+        @if(session('mensagem_status_aviso'))
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>{{ session('mensagem_status_aviso') }}</strong> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        @if(session('mensagem_status'))
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                <strong>{{ session('mensagem_status') }}</strong> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        @if(session('mensagem_status_erro'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>{{ session('mensagem_status_erro') }}</strong> <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
 
         <div class="row">
             <div class="col-md-7">
@@ -63,6 +63,11 @@
                             <div class="col-md-6">
                                 <label for="preco">Preço com desconto:</label>
                                 <input type="text" id="preco_com_desconto" name="preco_com_desconto" class="form-control mb-2" value="R${{ $produto_atual->preco_com_desconto }}" disabled>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="nome_categoria">Categoria</label>
+                                <input type="text" id="nome_categoria" name="nome_categoria" class="form-control mb-2" value="{{ $nome_categoria }}" disabled>
                             </div>
                         </div>
     
@@ -115,12 +120,11 @@
                     </div>
                 </div>
             </div>
-
         </div>
 
         <div class="col-md-12 mt-3">
             <hr>
-            <h2>Na mesma categoria</h2>
+            <h2>Na mesma categoria ({{ $nome_categoria }})</h2>
 
             <div class="row">
                 @forelse($produtos_mesma_categoria as $produto)
@@ -152,6 +156,7 @@
                                 @else
                                     <a class="btn btn-warning col-12" href="{{ route('telaAtualizaProduto', ['produto' => $produto->id]) }}" role="button">{{ __('Editar') }}</a>
                                 @endif
+                                <a class="btn btn-info col-12 my-2" href="{{ route('visualizarProduto', ['produto' => $produto->id]) }}" role="button">{{ __('Visualizar') }}</a>
                             </div>
                         </div>
                     </div>

@@ -50,16 +50,17 @@ class CompraController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function historico(Request $request) {
-        // Filtra por cpf
-        $cpf = $request['cpf'];
-        if(!is_null($cpf)) {
-            $compra = Compra::whereHas('user', function (Builder $query) use ($cpf) {
-                $query->where('cpf', $cpf);
-            })->where('concluida', true);
+        if(Auth::user()->email =='adm@adm') {
+            // Filtra por cpf
+            $cpf = $request['cpf'];
+            if(!is_null($cpf)) {
+                $compras = Compra::whereHas('user', function (Builder $query) use ($cpf) {
+                    $query->where('cpf', 'like', '%'.$cpf.'%');
+                })->where('concluida', true);
+            }else {
+                $compras = Compra::where('concluida', true);
+            }
         }
-
-        if(Auth::user()->email =='adm@adm')
-            $compras = Compra::where('concluida', true);
         else
             $compras = Auth::user()->compras()->where('concluida', true);
 
@@ -286,6 +287,7 @@ class CompraController extends Controller
 
         return view('compra.visualizar', [
             'compra' => $compra,
+            'pagamento' => $compra->pagamento()->first(),
             'itens_carrinho' => $itens_carrinho,
         ]);
     }

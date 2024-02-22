@@ -20,6 +20,7 @@ class CreatePagamentosTable extends Migration
             $table->string('nome_titular');
             $table->string('data_vencimento_cartao');
             $table->string('numero_cartao');
+            $table->string('cod_seguranca');
             $table->string('endereco_entrega');
         });
     }

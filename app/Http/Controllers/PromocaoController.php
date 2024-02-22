@@ -124,6 +124,7 @@ class PromocaoController extends Controller
             'promocao' => $promocao,
             'produtos_promocao' => $produtos_promocao,
             'produtos' => $produtos,
+            'promocoes' => Promocao::all(),
             'categorias' => Categoria::all(),
         ];
 
