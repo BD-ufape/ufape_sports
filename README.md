@@ -1,64 +1,39 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# UFAPE-SPORTS 
+# Loja de Produtos Esportivos
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este é um projeto Laravel em PHP para um site de uma loja de venda de produtos esportivos. O banco de dados utilizado é o PostgreSQL. O projeto foi desenvolvido por Joás Vitor, José Gabriel e Leonardo Nunes como alunos contribuidores.
 
-## About Laravel
+## Descrição
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Este projeto é uma aplicação web para uma loja de produtos esportivos, onde os usuários podem visualizar uma variedade de produtos disponíveis para compra. Os usuários podem navegar pelas categorias de produtos, visualizar detalhes de cada produto e adicionar itens ao carrinho de compras. Além disso, o sistema permite que os usuários efetuem o checkout de seus pedidos, fornecendo informações de envio e pagamento.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+Este projeto é parte de um trabalho avaliativo da disciplina de Banco de Dados.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Funcionalidades Principais
 
-## Learning Laravel
+- **Cadastro de Usuários**: Os usuários podem se cadastrar na plataforma, fornecendo informações básicas como nome, endereço de e-mail e senha.
+- **Navegação de Produtos**: Os usuários podem visualizar uma variedade de produtos organizados por categorias.
+- **Detalhes do Produto**: Os usuários podem visualizar detalhes específicos de cada produto, incluindo imagens, descrição, preço e disponibilidade.
+- **Carrinho de Compras**: Os usuários podem adicionar produtos ao carrinho de compras e visualizar o resumo de sua seleção.
+- **Checkout de Pedidos**: Os usuários podem finalizar a compra, fornecendo informações de envio e pagamento.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Pré-requisitos
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+Para rodar este projeto em seu ambiente local, você precisa ter instalado:
 
-## Laravel Sponsors
+- PHP >= 7.3
+- Composer
+- PostgreSQL
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+## Contribuidores
 
-### Premium Partners
+- Joás Vitor
+- José Gabriel
+- Leonardo Nunes
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## Licença
 
-## Contributing
+Este projeto é licenciado sob a [MIT License](LICENSE).
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
