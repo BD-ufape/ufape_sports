@@ -114,7 +114,7 @@
                                     </div>
                                 </div>
                             @empty
-                                <h4 class="m-3" style="text-align: center; color:gray">Nenhuma promoção aplicada a este produto.</h4>
+                                <h4 class="m-3" style="text-align: center; color:gray">Nenhuma promoção registrada para hoje</h4>
                             @endforelse
                         </div>
                     </div>

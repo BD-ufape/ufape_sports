@@ -88,7 +88,7 @@ class ProdutoController extends Controller
             $busca = Produto::where('id', '>', 0);
         }else {
             $busca = Produto::whereDoesntHave('promocoes', function (Builder $query) use ($promocao_id) {
-                $query->where('promocao_id', $promocao_id)->where('data_fim', '<=', Carbon::today());
+                $query->where('promocao_id', $promocao_id);
             });
         }
 
@@ -100,7 +100,7 @@ class ProdutoController extends Controller
 
         if ($promocao) {
             $busca = $busca->whereHas('promocoes', function (Builder $query) use ($promocao) {
-                $query->where('promocao_id', $promocao);
+                $query->where('promocao_id', $promocao)->where('data_fim', '>=', Carbon::today());
             });
         }
         
